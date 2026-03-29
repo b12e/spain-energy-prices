@@ -1,0 +1,57 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Spain Energy Prices - Tariff Configuration",
+        "description": "Enter your 2.0TD tariff prices **before taxes**. Prices are in euros. Taxes will be applied automatically.",
+        "data": {
+          "p1_price": "P1 Energy Price (€/kWh) — Peak hours",
+          "p2_price": "P2 Energy Price (€/kWh) — Standard hours",
+          "p3_price": "P3 Energy Price (€/kWh) — Off-peak hours",
+          "p1_power_price": "P1 Contracted Power Price (€/kW/day)",
+          "p2_power_price": "P2 Contracted Power Price (€/kW/day)",
+          "p1_power_kw": "P1 Contracted Power (kW)",
+          "p2_power_kw": "P2 Contracted Power (kW)",
+          "electricity_tax": "Electricity Tax / Impuesto Eléctrico (%)",
+          "iva": "IVA / VAT (%)"
+        },
+        "data_description": {
+          "p1_price": "Weekdays 10:00–14:00 and 18:00–22:00",
+          "p2_price": "Weekdays 08:00–10:00, 14:00–18:00, 22:00–00:00",
+          "p3_price": "Weekdays 00:00–08:00, weekends, and public holidays",
+          "electricity_tax": "Default: 5.11%",
+          "iva": "Default: 21%"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Spain Energy Prices is already configured. Use the Configure button on the integration to update prices."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Update Tariff Prices",
+        "description": "Update your 2.0TD tariff prices **before taxes**. Changes take effect immediately.",
+        "data": {
+          "p1_price": "P1 Energy Price (€/kWh) — Peak hours",
+          "p2_price": "P2 Energy Price (€/kWh) — Standard hours",
+          "p3_price": "P3 Energy Price (€/kWh) — Off-peak hours",
+          "p1_power_price": "P1 Contracted Power Price (€/kW/day)",
+          "p2_power_price": "P2 Contracted Power Price (€/kW/day)",
+          "p1_power_kw": "P1 Contracted Power (kW)",
+          "p2_power_kw": "P2 Contracted Power (kW)",
+          "electricity_tax": "Electricity Tax / Impuesto Eléctrico (%)",
+          "iva": "IVA / VAT (%)"
+        },
+        "data_description": {
+          "p1_price": "Weekdays 10:00–14:00 and 18:00–22:00",
+          "p2_price": "Weekdays 08:00–10:00, 14:00–18:00, 22:00–00:00",
+          "p3_price": "Weekdays 00:00–08:00, weekends, and public holidays",
+          "electricity_tax": "Default: 5.11%",
+          "iva": "Default: 21%"
+        }
+      }
+    }
+  }
+}
