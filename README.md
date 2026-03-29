@@ -6,6 +6,8 @@ A Home Assistant custom integration that calculates the real cost of electricity
 
 Enter your base energy prices from your electricity contract, and the integration creates sensors showing the actual price you pay at any moment — automatically switching between P1, P2, and P3 periods.
 
+> Warning: This was built for personal use, therefore holidays are those of the Valencian Community. If you don't live in C.V. then I recommend you to not use this, or to fork it and make changes.
+
 ---
 
 ## Sensors
