@@ -1,0 +1,12 @@
+{
+  "domain": "spain_energy_prices",
+  "name": "Spain Energy Prices",
+  "version": "1.0.0",
+  "config_flow": true,
+  "documentation": "https://github.com/b12e/spain-energy-prices",
+  "issue_tracker": "https://github.com/b12e/spain-energy-prices/issues",
+  "dependencies": [],
+  "codeowners": ["@b12e"],
+  "requirements": ["holidays>=0.46"],
+  "iot_class": "calculated"
+}

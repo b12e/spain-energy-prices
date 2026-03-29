@@ -1,0 +1,6 @@
+{
+  "name": "Spain Energy Prices",
+  "description": "Custom integration for Spanish 2.0TD electricity tariff price calculation including all taxes",
+  "render_readme": true,
+  "homeassistant": "2024.1.0"
+}
