@@ -30,9 +30,9 @@ from .const import (
     DOMAIN,
 )
 
-PRICE_SELECTOR = selector({"number": {"min": 0, "step": 0.000001, "mode": "box"}})
-KW_SELECTOR = selector({"number": {"min": 0, "step": 0.01, "mode": "box"}})
-TAX_SELECTOR = selector({"number": {"min": 0, "max": 100, "step": 0.01, "mode": "box"}})
+PRICE_SELECTOR = selector({"number": {"min": 0, "step": "any", "mode": "box"}})
+KW_SELECTOR = selector({"number": {"min": 0, "step": "any", "mode": "box"}})
+TAX_SELECTOR = selector({"number": {"min": 0, "max": 100, "step": "any", "mode": "box"}})
 
 
 def _build_schema(defaults: dict[str, Any]) -> vol.Schema:
