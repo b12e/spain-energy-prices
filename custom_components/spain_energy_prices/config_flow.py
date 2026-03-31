@@ -4,13 +4,9 @@ from __future__ import annotations
 from typing import Any
 
 import voluptuous as vol
-from homeassistant import config_entries
+from homeassistant.config_entries import ConfigEntry, ConfigFlow, OptionsFlow
 from homeassistant.core import callback
-from homeassistant.helpers.selector import (
-    NumberSelector,
-    NumberSelectorConfig,
-    NumberSelectorMode,
-)
+from homeassistant.helpers.selector import selector
 
 from .const import (
     CONF_ELECTRICITY_TAX,
@@ -34,15 +30,9 @@ from .const import (
     DOMAIN,
 )
 
-PRICE_SELECTOR = NumberSelector(
-    NumberSelectorConfig(min=0, step=0.000001, mode=NumberSelectorMode.BOX)
-)
-KW_SELECTOR = NumberSelector(
-    NumberSelectorConfig(min=0, step=0.01, mode=NumberSelectorMode.BOX)
-)
-TAX_SELECTOR = NumberSelector(
-    NumberSelectorConfig(min=0, max=100, step=0.01, mode=NumberSelectorMode.BOX)
-)
+PRICE_SELECTOR = selector({"number": {"min": 0, "step": 0.000001, "mode": "box"}})
+KW_SELECTOR = selector({"number": {"min": 0, "step": 0.01, "mode": "box"}})
+TAX_SELECTOR = selector({"number": {"min": 0, "max": 100, "step": 0.01, "mode": "box"}})
 
 
 def _build_schema(defaults: dict[str, Any]) -> vol.Schema:
@@ -63,14 +53,12 @@ def _build_schema(defaults: dict[str, Any]) -> vol.Schema:
     )
 
 
-class SpainEnergyPricesConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
+class SpainEnergyPricesConfigFlow(ConfigFlow, domain=DOMAIN):
     """Handle a config flow for Spain Energy Prices."""
 
     VERSION = 1
 
-    async def async_step_user(
-        self, user_input: dict | None = None
-    ) -> config_entries.FlowResult:
+    async def async_step_user(self, user_input: dict | None = None):
         """Handle the initial setup step."""
         await self.async_set_unique_id(DOMAIN)
         self._abort_if_unique_id_configured()
@@ -88,19 +76,15 @@ class SpainEnergyPricesConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     @staticmethod
     @callback
-    def async_get_options_flow(
-        config_entry: config_entries.ConfigEntry,
-    ) -> SpainEnergyPricesOptionsFlow:
+    def async_get_options_flow(config_entry: ConfigEntry) -> SpainEnergyPricesOptionsFlow:
         """Return the options flow handler."""
         return SpainEnergyPricesOptionsFlow()
 
 
-class SpainEnergyPricesOptionsFlow(config_entries.OptionsFlow):
+class SpainEnergyPricesOptionsFlow(OptionsFlow):
     """Handle the options flow for Spain Energy Prices."""
 
-    async def async_step_init(
-        self, user_input: dict | None = None
-    ) -> config_entries.FlowResult:
+    async def async_step_init(self, user_input: dict | None = None):
         """Manage the options — edit existing prices."""
         current: dict = {**self.config_entry.data, **self.config_entry.options}
 
