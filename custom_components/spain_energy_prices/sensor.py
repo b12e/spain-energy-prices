@@ -5,7 +5,7 @@ from datetime import date, datetime, timedelta
 
 import holidays
 from homeassistant import config_entries
-from homeassistant.components.sensor import SensorEntity
+from homeassistant.components.sensor import SensorEntity, SensorStateClass
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.event import async_track_point_in_time, async_track_time_interval
@@ -258,6 +258,7 @@ class SpainEnergyCostSensor(SpainEnergyBaseSensor):
     """Current energy cost in €/kWh including all Spanish taxes."""
 
     _attr_icon = "mdi:currency-eur"
+    _attr_state_class = SensorStateClass.MEASUREMENT
 
     def __init__(self, hass: HomeAssistant, entry: config_entries.ConfigEntry, config: dict) -> None:
         super().__init__(hass, entry, config, SENSOR_ENERGY_COST)
@@ -303,6 +304,7 @@ class SpainEnergyPeriodSensor(SpainEnergyBaseSensor):
     """Current 2.0TD tariff period name (P1 / P2 / P3)."""
 
     _attr_icon = "mdi:clock-time-four-outline"
+    _attr_state_class = SensorStateClass.MEASUREMENT
 
     def __init__(self, hass: HomeAssistant, entry: config_entries.ConfigEntry, config: dict) -> None:
         super().__init__(hass, entry, config, SENSOR_ENERGY_PERIOD)
@@ -338,6 +340,7 @@ class SpainPowerCostDailySensor(SpainEnergyBaseSensor):
     """Fixed daily contracted power cost in €/day including all taxes."""
 
     _attr_icon = "mdi:transmission-tower"
+    _attr_state_class = SensorStateClass.MEASUREMENT
 
     def __init__(self, hass: HomeAssistant, entry: config_entries.ConfigEntry, config: dict) -> None:
         super().__init__(hass, entry, config, SENSOR_POWER_COST_DAILY)
