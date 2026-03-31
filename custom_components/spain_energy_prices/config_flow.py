@@ -1,10 +1,16 @@
 """Config flow for Spain Energy Prices integration."""
 from __future__ import annotations
 
+from typing import Any
+
 import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.core import callback
-from homeassistant.helpers.selector import NumberSelector, NumberSelectorConfig
+from homeassistant.helpers.selector import (
+    NumberSelector,
+    NumberSelectorConfig,
+    NumberSelectorMode,
+)
 
 from .const import (
     CONF_ELECTRICITY_TAX,
@@ -29,56 +35,30 @@ from .const import (
 )
 
 PRICE_SELECTOR = NumberSelector(
-    NumberSelectorConfig(min=0, step=0.000001, mode="box")
+    NumberSelectorConfig(min=0, step=0.000001, mode=NumberSelectorMode.BOX)
 )
 KW_SELECTOR = NumberSelector(
-    NumberSelectorConfig(min=0, step=0.01, mode="box")
+    NumberSelectorConfig(min=0, step=0.01, mode=NumberSelectorMode.BOX)
 )
 TAX_SELECTOR = NumberSelector(
-    NumberSelectorConfig(min=0, max=100, step=0.01, mode="box")
+    NumberSelectorConfig(min=0, max=100, step=0.01, mode=NumberSelectorMode.BOX)
 )
 
 
-def _build_schema(defaults: dict) -> vol.Schema:
+def _build_schema(defaults: dict[str, Any]) -> vol.Schema:
     """Build the voluptuous schema, seeding defaults from existing config."""
+    d = defaults.get
     return vol.Schema(
         {
-            vol.Required(
-                CONF_P1_PRICE,
-                default=defaults.get(CONF_P1_PRICE, DEFAULT_P1_PRICE),
-            ): PRICE_SELECTOR,
-            vol.Required(
-                CONF_P2_PRICE,
-                default=defaults.get(CONF_P2_PRICE, DEFAULT_P2_PRICE),
-            ): PRICE_SELECTOR,
-            vol.Required(
-                CONF_P3_PRICE,
-                default=defaults.get(CONF_P3_PRICE, DEFAULT_P3_PRICE),
-            ): PRICE_SELECTOR,
-            vol.Required(
-                CONF_P1_POWER_PRICE,
-                default=defaults.get(CONF_P1_POWER_PRICE, DEFAULT_P1_POWER_PRICE),
-            ): PRICE_SELECTOR,
-            vol.Required(
-                CONF_P2_POWER_PRICE,
-                default=defaults.get(CONF_P2_POWER_PRICE, DEFAULT_P2_POWER_PRICE),
-            ): PRICE_SELECTOR,
-            vol.Required(
-                CONF_P1_POWER_KW,
-                default=defaults.get(CONF_P1_POWER_KW, DEFAULT_P1_POWER_KW),
-            ): KW_SELECTOR,
-            vol.Required(
-                CONF_P2_POWER_KW,
-                default=defaults.get(CONF_P2_POWER_KW, DEFAULT_P2_POWER_KW),
-            ): KW_SELECTOR,
-            vol.Required(
-                CONF_ELECTRICITY_TAX,
-                default=defaults.get(CONF_ELECTRICITY_TAX, DEFAULT_ELECTRICITY_TAX),
-            ): TAX_SELECTOR,
-            vol.Required(
-                CONF_IVA,
-                default=defaults.get(CONF_IVA, DEFAULT_IVA),
-            ): TAX_SELECTOR,
+            vol.Required(CONF_P1_PRICE, default=d(CONF_P1_PRICE, DEFAULT_P1_PRICE)): PRICE_SELECTOR,
+            vol.Required(CONF_P2_PRICE, default=d(CONF_P2_PRICE, DEFAULT_P2_PRICE)): PRICE_SELECTOR,
+            vol.Required(CONF_P3_PRICE, default=d(CONF_P3_PRICE, DEFAULT_P3_PRICE)): PRICE_SELECTOR,
+            vol.Required(CONF_P1_POWER_PRICE, default=d(CONF_P1_POWER_PRICE, DEFAULT_P1_POWER_PRICE)): PRICE_SELECTOR,
+            vol.Required(CONF_P2_POWER_PRICE, default=d(CONF_P2_POWER_PRICE, DEFAULT_P2_POWER_PRICE)): PRICE_SELECTOR,
+            vol.Required(CONF_P1_POWER_KW, default=d(CONF_P1_POWER_KW, DEFAULT_P1_POWER_KW)): KW_SELECTOR,
+            vol.Required(CONF_P2_POWER_KW, default=d(CONF_P2_POWER_KW, DEFAULT_P2_POWER_KW)): KW_SELECTOR,
+            vol.Required(CONF_ELECTRICITY_TAX, default=d(CONF_ELECTRICITY_TAX, DEFAULT_ELECTRICITY_TAX)): TAX_SELECTOR,
+            vol.Required(CONF_IVA, default=d(CONF_IVA, DEFAULT_IVA)): TAX_SELECTOR,
         }
     )
 
@@ -122,7 +102,6 @@ class SpainEnergyPricesOptionsFlow(config_entries.OptionsFlow):
         self, user_input: dict | None = None
     ) -> config_entries.FlowResult:
         """Manage the options — edit existing prices."""
-        # Merge data + options so the form shows current effective values
         current: dict = {**self.config_entry.data, **self.config_entry.options}
 
         if user_input is not None:
