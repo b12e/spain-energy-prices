@@ -4,7 +4,7 @@ from __future__ import annotations
 import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.core import callback
-from homeassistant.helpers.selector import NumberSelector, NumberSelectorConfig, NumberSelectorMode
+from homeassistant.helpers.selector import NumberSelector, NumberSelectorConfig
 
 from .const import (
     CONF_ELECTRICITY_TAX,
@@ -29,13 +29,13 @@ from .const import (
 )
 
 PRICE_SELECTOR = NumberSelector(
-    NumberSelectorConfig(min=0, step=0.000001, mode=NumberSelectorMode.BOX)
+    NumberSelectorConfig(min=0, step=0.000001, mode="box")
 )
 KW_SELECTOR = NumberSelector(
-    NumberSelectorConfig(min=0, step=0.01, mode=NumberSelectorMode.BOX)
+    NumberSelectorConfig(min=0, step=0.01, mode="box")
 )
 TAX_SELECTOR = NumberSelector(
-    NumberSelectorConfig(min=0, max=100, step=0.01, mode=NumberSelectorMode.BOX)
+    NumberSelectorConfig(min=0, max=100, step=0.01, mode="box")
 )
 
 
