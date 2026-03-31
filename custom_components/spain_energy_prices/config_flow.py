@@ -4,6 +4,7 @@ from __future__ import annotations
 import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.core import callback
+from homeassistant.helpers.selector import NumberSelector, NumberSelectorConfig, NumberSelectorMode
 
 from .const import (
     CONF_ELECTRICITY_TAX,
@@ -27,6 +28,16 @@ from .const import (
     DOMAIN,
 )
 
+PRICE_SELECTOR = NumberSelector(
+    NumberSelectorConfig(min=0, step=0.000001, mode=NumberSelectorMode.BOX)
+)
+KW_SELECTOR = NumberSelector(
+    NumberSelectorConfig(min=0, step=0.01, mode=NumberSelectorMode.BOX)
+)
+TAX_SELECTOR = NumberSelector(
+    NumberSelectorConfig(min=0, max=100, step=0.01, mode=NumberSelectorMode.BOX)
+)
+
 
 def _build_schema(defaults: dict) -> vol.Schema:
     """Build the voluptuous schema, seeding defaults from existing config."""
@@ -35,39 +46,39 @@ def _build_schema(defaults: dict) -> vol.Schema:
             vol.Required(
                 CONF_P1_PRICE,
                 default=defaults.get(CONF_P1_PRICE, DEFAULT_P1_PRICE),
-            ): vol.All(vol.Coerce(float), vol.Range(min=0.0)),
+            ): PRICE_SELECTOR,
             vol.Required(
                 CONF_P2_PRICE,
                 default=defaults.get(CONF_P2_PRICE, DEFAULT_P2_PRICE),
-            ): vol.All(vol.Coerce(float), vol.Range(min=0.0)),
+            ): PRICE_SELECTOR,
             vol.Required(
                 CONF_P3_PRICE,
                 default=defaults.get(CONF_P3_PRICE, DEFAULT_P3_PRICE),
-            ): vol.All(vol.Coerce(float), vol.Range(min=0.0)),
+            ): PRICE_SELECTOR,
             vol.Required(
                 CONF_P1_POWER_PRICE,
                 default=defaults.get(CONF_P1_POWER_PRICE, DEFAULT_P1_POWER_PRICE),
-            ): vol.All(vol.Coerce(float), vol.Range(min=0.0)),
+            ): PRICE_SELECTOR,
             vol.Required(
                 CONF_P2_POWER_PRICE,
                 default=defaults.get(CONF_P2_POWER_PRICE, DEFAULT_P2_POWER_PRICE),
-            ): vol.All(vol.Coerce(float), vol.Range(min=0.0)),
+            ): PRICE_SELECTOR,
             vol.Required(
                 CONF_P1_POWER_KW,
                 default=defaults.get(CONF_P1_POWER_KW, DEFAULT_P1_POWER_KW),
-            ): vol.All(vol.Coerce(float), vol.Range(min=0.0)),
+            ): KW_SELECTOR,
             vol.Required(
                 CONF_P2_POWER_KW,
                 default=defaults.get(CONF_P2_POWER_KW, DEFAULT_P2_POWER_KW),
-            ): vol.All(vol.Coerce(float), vol.Range(min=0.0)),
+            ): KW_SELECTOR,
             vol.Required(
                 CONF_ELECTRICITY_TAX,
                 default=defaults.get(CONF_ELECTRICITY_TAX, DEFAULT_ELECTRICITY_TAX),
-            ): vol.All(vol.Coerce(float), vol.Range(min=0.0, max=100.0)),
+            ): TAX_SELECTOR,
             vol.Required(
                 CONF_IVA,
                 default=defaults.get(CONF_IVA, DEFAULT_IVA),
-            ): vol.All(vol.Coerce(float), vol.Range(min=0.0, max=100.0)),
+            ): TAX_SELECTOR,
         }
     )
 
