@@ -39,8 +39,8 @@ from .const import (
 
 
 def get_spanish_holidays(year: int) -> set[date]:
-    """Return Spanish national + Valencian public holidays for the given year."""
-    return set(holidays.Spain(subdiv="VC", years=year).keys())
+    """Return Spanish national public holidays for the given year."""
+    return set(holidays.Spain(years=year).keys())
 
 
 def get_current_period(dt: datetime, holiday_cache: dict[int, set[date]]) -> str:
